@@ -1,0 +1,16 @@
+{
+    "tasks": [
+        {
+            "id" : 1,
+            "headline" : "Pick up Too Good To Go order at Netto",
+            "description" : "Netto Svanemøllen, Between 20:30 - 21:50. Østerbrogade 238, 2100 København Ø",
+            "isCompleted" : false
+        },
+        {
+            "id" : 2,
+            "headline" : "University 10 year anniversary",
+            "description" : "Plan trip to Portugal, book flight, see friends, see family, join the 10 year graduation anniversary celebration.",
+            "isCompleted" : false
+        }
+    ]
+}

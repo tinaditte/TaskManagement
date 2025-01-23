@@ -1,5 +1,5 @@
 //
-//  Task_ManagementApp.swift
+//  TaskManagementApp.swift
 //  Task Management
 //
 //  Created by Tina Thomsen on 23/01/2025.
@@ -12,24 +12,11 @@ import SwiftData
 // Inital navig + root structure
 
 @main
-struct Task_ManagementApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
+struct TaskManagementApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView()
         }
-        .modelContainer(sharedModelContainer)
     }
 }

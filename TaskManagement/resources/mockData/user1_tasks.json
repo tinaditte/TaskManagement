@@ -1,0 +1,16 @@
+{
+    "tasks": [
+        {
+            "id" : 1,
+            "headline" : "Plan summer vacation",
+            "description" : "Rent a plane, book airplane parking, book hotel, plan adventures, pack suitcase",
+            "isCompleted" : false
+        },
+        {
+            "id" : 2,
+            "headline" : "Pick up Too Good to Go order",
+            "description" : "Bossens Bageri og konditori. Between 17:30 - 18:00. Østerbrogade 132, 2100 København Ø",
+            "isCompleted" : false
+        }
+    ]
+}
