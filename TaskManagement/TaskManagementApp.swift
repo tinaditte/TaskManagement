@@ -8,6 +8,9 @@
 import SwiftUI
 import SwiftData
 
+// Lifecycle handler
+// Inital navig + root structure
+
 @main
 struct Task_ManagementApp: App {
     var sharedModelContainer: ModelContainer = {

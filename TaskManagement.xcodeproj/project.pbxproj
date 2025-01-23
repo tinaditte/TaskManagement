@@ -11,9 +11,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		5C7816AA2D42423000541B00 /* Task Management */ = {
+		5C7816AA2D42423000541B00 /* TaskManagement */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Task Management";
+			path = TaskManagement;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		5C78169F2D42423000541B00 = {
 			isa = PBXGroup;
 			children = (
-				5C7816AA2D42423000541B00 /* Task Management */,
+				5C7816AA2D42423000541B00 /* TaskManagement */,
 				5C7816A92D42423000541B00 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +61,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				5C7816AA2D42423000541B00 /* Task Management */,
+				5C7816AA2D42423000541B00 /* TaskManagement */,
 			);
 			name = "Task Management";
 			packageProductDependencies = (
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5C7816A32D42423000541B00 /* Build configuration list for PBXProject "Task Management" */;
+			buildConfigurationList = 5C7816A32D42423000541B00 /* Build configuration list for PBXProject "TaskManagement" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -303,7 +303,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5C7816A32D42423000541B00 /* Build configuration list for PBXProject "Task Management" */ = {
+		5C7816A32D42423000541B00 /* Build configuration list for PBXProject "TaskManagement" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5C7816B62D42423100541B00 /* Debug */,
