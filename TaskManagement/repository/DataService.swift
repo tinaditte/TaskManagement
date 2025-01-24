@@ -8,42 +8,54 @@
 import Foundation
 
 class DataService {
+    private let mockDelay: TimeInterval
+
+    init(mockDelay: TimeInterval = 2.0) {
+        self.mockDelay = mockDelay
+    }
     
-    static func fetchRequest(resource: String) -> Data? {
-        guard let url = Bundle.main.url(forResource: resource, withExtension: "json", subdirectory: "resources/mockData"),
+    func fetchRequest(resource: String) async throws -> Data {
+        try await Task.sleep(nanoseconds: UInt64(mockDelay * 1_000_000_000))
+        
+        guard let url = Bundle.main.url(forResource: resource, withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
-            return nil
+            throw DataError.fileNotFound
         }
         return data
     }
     
-    static func checkUserExistence(username: String) -> Bool {
-        guard let data = fetchRequest(resource: "users") else {
-            print("users.json not found")
-            return false
-        }
+    func checkUserExistence(username: String) async throws -> UserOverview {
+        let data = try await fetchRequest(resource: "users")
+        let usersContainer = try JSONDecoder().decode(UsersContainer.self, from: data)
         
-        do {
-            let usersContainer = try JSONDecoder().decode(UsersContainer.self, from: data)
-            return usersContainer.users.contains { $0.username == username }
-        } catch {
-            print("Error decoding users.json: \(error)")
-            return false
+        guard let userOverview = usersContainer.users.first(where: { $0.username == username }) else {
+            throw DataError.userNotFound
         }
+        return userOverview
     }
     
-    static func checkPassword(userId: String, password: String) -> User? {
-        guard let data = fetchRequest(resource: "userId") else {
-            print("\(userId).json not found")
-            return nil
-        }
+    func checkPassword(userOverview: UserOverview, password: String) async throws -> User {
+        let data = try await fetchRequest(resource: userOverview.id)
+        let userContainer = try JSONDecoder().decode([String: User].self, from: data)
         
-        do {
-            let user = try JSONDecoder().decode(User.self, from: data)
-            return user.password == password ? user : nil
-        } catch {
-            print("Error parsing JSON: \(error)")
-            return nil
+        guard let user = userContainer[userOverview.id] else {
+            throw DataError.userNotFound
         }
+        guard user.password == password else {
+            throw DataError.invalidCredentials
+        }
+        return user
+    }
+    
+    func fetchTasks(taskListId: String) async throws -> [UserTask] {
+            guard let data = try? await fetchRequest(resource: taskListId) else {
+                throw DataError.fileNotFound
+            }
+            
+            guard let container = try? JSONDecoder().decode(UserTaskContainer.self, from: data) else {
+                throw DataError.decodingError
+            }
+            
+            return container.tasks
     }
 }

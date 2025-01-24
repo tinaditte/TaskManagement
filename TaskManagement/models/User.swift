@@ -10,12 +10,12 @@ struct UsersContainer: Codable {
 }
 
 struct UserOverview: Codable {
-    let id: Int
+    let id: String
     let username: String
 }
 
 struct User: Codable {
-    let id: Int
+    let id: String
     let username: String
     let name: String
     let password: String

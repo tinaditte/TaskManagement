@@ -7,12 +7,16 @@
 
 import Foundation
 
-class SessionManager {
+class SessionManager: ObservableObject {
+    @Published var currentUser: User? { didSet { objectWillChange.send() }}
+    @Published var isBusy = false
+    
+    var isLoggedIn: Bool { currentUser != nil }
+    
     static let shared = SessionManager()
-    private init() {}
     
-    var currentUser: User?
-    
+    private init() { currentUser = getLoggedInUser() }
+
     func saveLoggedInUser(_ user: User) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(user) {
@@ -20,7 +24,7 @@ class SessionManager {
             currentUser = user
         }
     }
-    
+
     func getLoggedInUser() -> User? {
         if let data = UserDefaults.standard.data(forKey: "loggedInUser") {
             let decoder = JSONDecoder()
@@ -28,13 +32,9 @@ class SessionManager {
         }
         return nil
     }
-    
+
     func logoutUser() {
         UserDefaults.standard.removeObject(forKey: "loggedInUser")
         currentUser = nil
     }
-    
 }
-
-// idea: simulate automatic user logout after x minutes inactivity with Timer
-// Show logout screen or login popup when session expires

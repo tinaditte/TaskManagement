@@ -9,11 +9,23 @@ import SwiftUICore
 import SwiftUI
 
 struct LoginView: View {
-    @State private var username: String = ""
-    @State private var password: String = ""
+    @StateObject var viewModel: LoginViewModel
+    @EnvironmentObject var router: Router
     
-    func handleSignInTapped() {
-        
+    init() {
+        _viewModel = StateObject(wrappedValue: LoginViewModel(dataService: DataService()))
+    }
+    
+    func handleLoginTap() {
+        Task {
+                withAnimation {
+                    viewModel.isLoading = true
+                }
+                await viewModel.handleLoginFlow()
+                withAnimation {
+                    viewModel.isLoading = false
+                }
+            }
     }
     
     var body: some View {
@@ -27,22 +39,34 @@ struct LoginView: View {
                     .overlay {
                         VStack(spacing: 20) {
                             Spacer()
-                            Text(AppStrings.loginTitle)
+                            Text(AppStrings.Login.loginTitle)
                                 .font(.title)
                                 .foregroundColor(.darkBrown)
                                 .bold()
                             
-                            TextFieldView(placeholder: AppStrings.usernamePlaceholder, inputText: $username)
-                            TextFieldView(placeholder: AppStrings.passwordPlaceholder, inputText: $password, isSecure: true)
+                            TextFieldView(inputText: $viewModel.username, placeholder: AppStrings.Login.usernamePlaceholder)
+                            TextFieldView(inputText: $viewModel.password, placeholder: AppStrings.Login.passwordPlaceholder, isSecure: true)
                             
-                            Button(action: handleSignInTapped) {
-                                Text(AppStrings.loginBtn)
-                                    .font(.callout.bold())
+                            if let errorMessage = viewModel.errorMessage {
+                                Text(errorMessage)
+                                    .foregroundColor(.red)
+                                    .font(.caption)
+                            }
+                            
+                            if viewModel.isLoading {
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle())
                                     .padding()
-                                    .background(Color.shallowWater)
-                                    .foregroundColor(.cream)
-                                    .cornerRadius(20)
-                                    .shadow(radius: 5)
+                            } else {
+                                Button(action: handleLoginTap) {
+                                    Text(AppStrings.Login.loginBtn)
+                                        .font(.callout.bold())
+                                        .padding()
+                                        .background(Color.shallowWater)
+                                        .foregroundColor(.cream)
+                                        .cornerRadius(20)
+                                        .shadow(radius: 5)
+                                }
                             }
                             Spacer()
                         }
@@ -55,7 +79,8 @@ struct LoginView: View {
 
 struct previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        //LoginView()
+        TaskListView()
     }
 }
 

@@ -9,8 +9,8 @@ import SwiftUICore
 import SwiftUI
 
 struct TextFieldView: View {
-    var placeholder: String
     @Binding var inputText: String
+    var placeholder: String
     var isSecure: Bool = false
     
     var body: some View {
@@ -21,7 +21,7 @@ struct TextFieldView: View {
                 .background(
                     RoundedRectangle(cornerRadius: 10)
                     .stroke(.mountainBrown, lineWidth: 2)
-                    .fill(.cream)
+                    .fill(.white)
                     .shadow(radius: 5)
                 )
                 .padding(.horizontal)

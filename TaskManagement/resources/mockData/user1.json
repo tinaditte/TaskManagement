@@ -1,9 +1,9 @@
 {
-    "1": {
-        "username": "user1"
+    "user1": {
+        "id": "user1",
+        "username": "Dan@mail.com",
         "name": "Dan",
         "password": "1234",
         "tasks": "user1_tasks"
     }
 }
-
