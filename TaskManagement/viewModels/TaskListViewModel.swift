@@ -8,7 +8,6 @@
 import SwiftUICore
 import SwiftUI
 
-@MainActor
 class TaskListViewModel: ObservableObject {
     @Published var tasks: [UserTask] = []
     @Published var errorMessage: String?
@@ -20,7 +19,7 @@ class TaskListViewModel: ObservableObject {
         self.dataService = dataService
     }
     
-    
+    @MainActor
     func loadTasks() async {
         isLoading = true
         defer { isLoading = false }
@@ -34,4 +33,25 @@ class TaskListViewModel: ObservableObject {
             errorMessage = ErrorHandler.handle(error: error)
         }
     }
+    
+    @MainActor
+    func toggleTaskCompletion(taskId: Int) async {
+        guard let user = SessionManager.shared.getLoggedInUser() else {
+            return
+        }
+        
+        guard let index = tasks.firstIndex(where: { $0.id == taskId }) else {
+            errorMessage = ErrorHandler.handle(error: DataError.taskNotFound)
+            return
+        }
+        
+        tasks[index].isCompleted.toggle()
+        
+        do {
+            try await dataService.saveTasks(tasks, taskListId: user.tasks)
+        } catch {
+            errorMessage = ErrorHandler.handle(error: error)
+        }
+    }
 }
+

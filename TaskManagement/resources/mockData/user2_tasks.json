@@ -1,16 +1,46 @@
 {
     "tasks": [
         {
-            "id" : 1,
-            "headline" : "Pick up Too Good To Go order at Netto",
-            "description" : "Netto Svanemøllen, Between 20:30 - 21:50. Østerbrogade 238, 2100 København Ø",
-            "isCompleted" : false
+            "id": 1,
+            "headline": "Pick up Too Good To Go order at Netto",
+            "description": "Netto Svanemøllen, Between 20:30 - 21:50. Østerbrogade 238, 2100 København Ø",
+            "isCompleted": false
         },
         {
-            "id" : 2,
-            "headline" : "University 10 year anniversary",
-            "description" : "Plan trip to Portugal, book flight, see friends, see family, join the 10 year graduation anniversary celebration.",
-            "isCompleted" : false
+            "id": 2,
+            "headline": "University 10 year anniversary",
+            "description": "Plan trip to Portugal, book flight, see friends, see family, join the 10 year graduation anniversary celebration.",
+            "isCompleted": false
+        },
+        {
+            "id": 3,
+            "headline": "Organize closet",
+            "description": "Sort clothes by season, donate unused items, and organize by color.",
+            "isCompleted": false
+        },
+        {
+            "id": 4,
+            "headline": "Prepare weekly meal plan",
+            "description": "Plan breakfast, lunch, and dinner for the week, create a shopping list, and include snacks.",
+            "isCompleted": false
+        },
+        {
+            "id": 5,
+            "headline": "Water houseplants",
+            "description": "Check all plants, water as needed, and clean any dust off leaves.",
+            "isCompleted": false
+        },
+        {
+            "id": 6,
+            "headline": "Renew library books",
+            "description": "Check due dates, renew online or visit the library to return and borrow new books.",
+            "isCompleted": false
+        },
+        {
+            "id": 7,
+            "headline": "Backup photos",
+            "description": "Organize phone photos into albums and upload them to the cloud or an external drive.",
+            "isCompleted": false
         }
     ]
 }

@@ -77,10 +77,10 @@ struct LoginView: View {
     }
 }
 
-struct previews: PreviewProvider {
+struct login_previews: PreviewProvider {
     static var previews: some View {
-        //LoginView()
-        TaskListView()
+        LoginView()
+            .environmentObject(SessionManager.shared)
+            .environmentObject(Router())
     }
 }
-

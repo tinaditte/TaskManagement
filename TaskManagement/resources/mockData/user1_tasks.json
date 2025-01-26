@@ -1,16 +1,46 @@
 {
     "tasks": [
         {
-            "id" : 1,
-            "headline" : "Plan summer vacation",
-            "description" : "Rent a plane, book airplane parking, book hotel, plan adventures, pack suitcase",
-            "isCompleted" : false
+            "id": 1,
+            "headline": "Plan summer vacation",
+            "description": "Rent a plane, book airplane parking, book hotel, plan adventures, pack suitcase",
+            "isCompleted": false
         },
         {
-            "id" : 2,
-            "headline" : "Pick up Too Good to Go order",
-            "description" : "Bossens Bageri og konditori. Between 17:30 - 18:00. Østerbrogade 132, 2100 København Ø",
-            "isCompleted" : false
+            "id": 2,
+            "headline": "Pick up Too Good to Go order",
+            "description": "Bossens Bageri og konditori. Between 17:30 - 18:00. Østerbrogade 132, 2100 København Ø",
+            "isCompleted": false
+        },
+        {
+            "id": 3,
+            "headline": "Fix broken chair",
+            "description": "Gather tools, reinforce loose joints, and repaint the chair if needed.",
+            "isCompleted": false
+        },
+        {
+            "id": 4,
+            "headline": "Write a thank-you note",
+            "description": "Draft a heartfelt note to thank someone for their help or kindness recently.",
+            "isCompleted": false
+        },
+        {
+            "id": 5,
+            "headline": "Clean car interior",
+            "description": "Vacuum seats and carpets, wipe down surfaces, and remove trash.",
+            "isCompleted": false
+        },
+        {
+            "id": 6,
+            "headline": "Create workout schedule",
+            "description": "Plan weekly fitness goals, decide on exercises, and set times for workouts.",
+            "isCompleted": false
+        },
+        {
+            "id": 7,
+            "headline": "Learn a new recipe",
+            "description": "Find a recipe, gather ingredients, and cook something new for dinner.",
+            "isCompleted": false
         }
     ]
 }

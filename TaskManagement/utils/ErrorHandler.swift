@@ -13,6 +13,7 @@ enum DataError: Error, LocalizedError {
     case userNotFound
     case invalidCredentials
     case userTaskNotFound
+    case taskNotFound
 }
 
 class ErrorHandler {
@@ -29,6 +30,8 @@ class ErrorHandler {
                 return AppStrings.Errors.invalidPassword
             case .userTaskNotFound:
                 return AppStrings.Errors.invalidTaskId
+            case .taskNotFound:
+                return AppStrings.Errors.taskNotFound
             }
         }
         return "An unexpected error occurred. Please try again."

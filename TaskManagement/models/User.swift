@@ -15,9 +15,11 @@ struct UserOverview: Codable {
 }
 
 struct User: Codable {
-    let id: String
+    let userId: String
     let username: String
     let name: String
     let password: String
     var tasks: String
+    
+    
 }

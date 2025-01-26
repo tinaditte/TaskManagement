@@ -13,8 +13,34 @@ struct TaskListView: View {
     @EnvironmentObject var router: Router
     @EnvironmentObject var sessionManager: SessionManager
     
+    private var isPreview: Bool {
+        ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+    }
+    
     init() {
         _viewModel = StateObject(wrappedValue: TaskListViewModel(dataService: DataService()))
+    }
+    
+    private func loadData() {
+        if isPreview {
+            viewModel.tasks = SampleData.mockTasks
+        } else {
+            Task {
+                await viewModel.loadTasks()
+            }
+        }
+    }
+    
+    private func logout() {
+        sessionManager.logoutUser()
+    }
+    
+    private func toggleTask(taskId: Int) {
+        if !isPreview {
+            Task {
+                await viewModel.toggleTaskCompletion(taskId: taskId)
+            }
+        }
     }
     
     var body: some View {
@@ -22,7 +48,7 @@ struct TaskListView: View {
             Color.deepOcean.ignoresSafeArea()
             
             if viewModel.isLoading {
-                ProgressView("Loading tasks...")
+                ProgressView(AppStrings.TaskList.loading)
                     .progressViewStyle(CircularProgressViewStyle())
                     .foregroundColor(.cream)
             } else if let errorMessage = viewModel.errorMessage {
@@ -34,70 +60,56 @@ struct TaskListView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     // Title Section
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Welcome \(sessionManager.currentUser?.name ?? "User")")
+                        Text(AppStrings.formattedString(
+                            AppStrings.TaskList.welcomeTitle,
+                            SessionManager.shared.currentUser?.name ?? "User")
+                        )
                             .font(.largeTitle.bold())
-                            .foregroundColor(.cream)
-                        Text("What task shall we tackle today?")
+                            .foregroundColor(.bearBrown)
+                        Text(AppStrings.TaskList.welcomeSubtitle)
                             .font(.headline)
-                            .foregroundColor(.fontBrown)
+                            .foregroundColor(.bearBrown)
                     }
                     .padding(.horizontal)
                     
-                    // Task List Section
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.cream)
-                        .shadow(radius: 5)
-                        .padding(.horizontal)
-                        .overlay(
-                            List(viewModel.tasks, id: \.id) { task in
-                                TaskCellView(task: task)
-                                    .listRowSeparatorTint(.darkBrown)
-                                    .listRowInsets(EdgeInsets())
-                            }
-                                .listStyle(.plain)
-                                .scrollContentBackground(.hidden)
-                        )
+                    Spacer()
+                    
+                    List(viewModel.tasks, id: \.id) { task in
+                        TaskCellView(task: task, onToggle: {
+                            toggleTask(taskId: task.id)
+                        })
+                            .listRowBackground(Color.cream)
+                            .padding(.horizontal, -10)
+                            .listRowSeparatorTint(.darkBrown)
+                    }
+                    .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
+                    .background(Color.cream)
+                    .cornerRadius(20)
+                    .padding(.horizontal)
+                    .shadow(radius: 5)
                 }
                 .padding()
             }
         }
-        .onAppear {
-            Task {
-                await viewModel.loadTasks()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(AppStrings.TaskList.logoutBtn) {
+                    logout()
+                }
+                .foregroundColor(.cream)
             }
         }
-    }
-}
-
-struct TaskCellView: View {
-    let task: UserTask
-    var body: some View {
-        HStack {
-            // Checkbox
-            Circle()
-                .strokeBorder(Color.darkBrown, lineWidth: 2)
-                .frame(width: 24, height: 24)
-                .overlay(
-                    task.isCompleted ? Image(systemName: "checkmark")
-                        .font(.caption.bold())
-                        .foregroundColor(.darkBrown) : nil
-                )
-            // Task Headline
-            Text(task.headline)
-                .font(.body)
-                .foregroundColor(.fontBrown)
-                .padding(.horizontal)
-            Spacer()
-            // Navigation Arrow
-            Image(systemName: "chevron.right")
-                .foregroundColor(.midBlue)
+        .onAppear {
+            loadData()
         }
-        .padding()
     }
 }
 
 struct TaskListView_Previews: PreviewProvider {
     static var previews: some View {
         TaskListView()
+            .environmentObject(SessionManager.shared)
+            .environmentObject(Router())
     }
 }

@@ -40,9 +40,6 @@ struct TaskManagementApp: App {
             .tint(.cream)
             .environmentObject(sessionManager)
             .environmentObject(router)
-            .onChange(of: scenePhase) {
-                sessionManager.logoutUser()
-            }
         }
     }
 }

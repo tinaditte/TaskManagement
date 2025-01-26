@@ -9,7 +9,6 @@ import Foundation
 
 class SessionManager: ObservableObject {
     @Published var currentUser: User? { didSet { objectWillChange.send() }}
-    @Published var isBusy = false
     
     var isLoggedIn: Bool { currentUser != nil }
     
@@ -26,15 +25,22 @@ class SessionManager: ObservableObject {
     }
 
     func getLoggedInUser() -> User? {
-        if let data = UserDefaults.standard.data(forKey: "loggedInUser") {
-            let decoder = JSONDecoder()
-            return try? decoder.decode(User.self, from: data)
-        }
-        return nil
+    #if DEBUG
+    if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+        return currentUser
+    }
+    #endif
+    
+    if let data = UserDefaults.standard.data(forKey: "loggedInUser") {
+        let decoder = JSONDecoder()
+        return try? decoder.decode(User.self, from: data)
+    }
+    return nil
     }
 
     func logoutUser() {
         UserDefaults.standard.removeObject(forKey: "loggedInUser")
         currentUser = nil
     }
+    
 }

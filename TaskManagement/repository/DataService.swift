@@ -58,4 +58,15 @@ class DataService {
             
             return container.tasks
     }
+    
+    func saveTasks(_ tasks: [UserTask], taskListId: String) async throws {
+        try await Task.sleep(nanoseconds: UInt64(1_000_000_000))
+        
+        guard let url = Bundle.main.url(forResource: taskListId, withExtension: "json") else {
+            throw DataError.fileNotFound
+        }
+
+        let data = try JSONEncoder().encode(tasks)
+        try data.write(to: url)
+    }
 }

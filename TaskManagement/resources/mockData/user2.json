@@ -1,9 +1,9 @@
 {
     "user2": {
-        "userId": "user2"
+        "userId": "user2",
         "username": "Marc@mail.com",
         "name": "Marc",
         "password": "5678",
-        "tasks": "user1_tasks"
+        "tasks": "user2_tasks"
     }
 }
